@@ -62,12 +62,27 @@ class Game extends React.Component {
     this.setState({totalQuestions: this.props.data.questions.length -1})
   }
 
+  playAgain = () => {
+    this.setState({
+      totalQuestions: this.props.data.questions.length -1,
+      solved: 0,
+      right: 0,
+      wrong: 0,
+      flipped: false,
+      finished: false
+    })
+  }
+
   questionsUI = () => (
     <View>
       <View style={GameStyleSheet.question}>
         <Text>{this.state.flipped?`${this.props.data.questions[this.state.solved].result}`:this.props.data.questions[this.state.solved].statement}</Text>
       </View>
-
+      <View style={{alignItems:'center',backgroundColor:'yellow'}}>
+        <TouchableOpacity onPress={()=>{this.setState((old)=>({flipped: !old.flipped}))}}>
+          <Text>Flip the card!</Text>
+        </TouchableOpacity>
+      </View>
       <View style={GameStyleSheet.buttonView}>
         <TouchableOpacity style={[GameStyleSheet.button, GameStyleSheet.trueButton]} onPress={()=>{this.handleAnswer(true)}}>
           <Text style={GameStyleSheet.buttonText}>True</Text>
@@ -78,17 +93,25 @@ class Game extends React.Component {
         </TouchableOpacity>
       </View>
 
-      <View>
-        <TouchableOpacity onPress={()=>{this.setState((old)=>({flipped: !old.flipped}))}}>
-          <Text>Flip the card!</Text>
-        </TouchableOpacity>
-      </View>
+
     </View>
   )
 
   resultsUI = () => (
     <View>
-      <Text>Game Complete! Your score: {this.state.right}/{this.state.totalQuestions + 1}</Text>
+      <View style={GameStyleSheet.question}>
+        <Text>Game Complete! Your score: {this.state.right}/{this.state.totalQuestions + 1}</Text>
+      </View>
+
+      <View style={GameStyleSheet.buttonView}>
+        <TouchableOpacity style={[GameStyleSheet.button, GameStyleSheet.trueButton]} onPress={()=>{this.playAgain()}}>
+          <Text style={GameStyleSheet.buttonText}>Play Again</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={[GameStyleSheet.button, GameStyleSheet.falseButton]} onPress={()=>{this.props.navigation.navigate('Landing')}}>
+          <Text style={GameStyleSheet.buttonText}>Home</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   )
 
@@ -103,7 +126,8 @@ class Game extends React.Component {
       ...old,
       solved: old.solved + 1,
       [decide]: old[decide] + 1,
-      finished: old.solved === old.totalQuestions
+      finished: old.solved === old.totalQuestions,
+      flipped: false
     }))
   }
   render() {
