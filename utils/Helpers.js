@@ -24,17 +24,23 @@ export const  INIT_STATE = {
       },
       '1p3ofhiub2r': {
         id: '1p3ofhiub2r',
-        name: 'Dank Memes',
+        name: 'Hard to Swallow Truths',
         questions: [
           {
             'id': '13[fopnirbjwlkmq;]',
-            'statement': 'ur mom gay',
+            'statement': 'There are only two genders',
             'result': true,
           },
 
           {
             'id': '1390fhbioeuvji',
-            'statement': 'bush did 9/11',
+            'statement': 'Pop tarts are ravioli',
+            'result': true,
+          },
+
+          {
+            'id': '193-04hgioru2fe',
+            'statement': 'The Earth is not flat',
             'result': true,
           },
         ],
@@ -45,7 +51,7 @@ export const  INIT_STATE = {
         questions: [
           {
             'id': 'p13ifobeuhjvkjni',
-            'statement': 'how are you',
+            'statement': 'How are you',
             'result': true,
           },
 
