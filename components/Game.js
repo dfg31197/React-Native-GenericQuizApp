@@ -75,8 +75,11 @@ class Game extends React.Component {
 
   questionsUI = () => (
     <View>
+      <View>
+        <Text>{`${this.state.totalQuestions - this.state.solved } more Question(s) left`}</Text>
+      </View>
       <View style={GameStyleSheet.question}>
-        <Text>{this.state.flipped?`${this.props.data.questions[this.state.solved].result}`:this.props.data.questions[this.state.solved].statement}</Text>
+        <Text>{this.state.flipped?`${this.props.data.questions[this.state.solved].result}`:`${this.props.data.questions[this.state.solved].statement}`}</Text>
       </View>
       <View style={{alignItems:'center',backgroundColor:'yellow'}}>
         <TouchableOpacity onPress={()=>{this.setState((old)=>({flipped: !old.flipped}))}}>
@@ -108,7 +111,7 @@ class Game extends React.Component {
           <Text style={GameStyleSheet.buttonText}>Play Again</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[GameStyleSheet.button, GameStyleSheet.falseButton]} onPress={()=>{this.props.navigation.navigate('Landing')}}>
+        <TouchableOpacity style={[GameStyleSheet.button, GameStyleSheet.falseButton]} onPress={()=>{this.props.navigation.goBack()}}>
           <Text style={GameStyleSheet.buttonText}>Home</Text>
         </TouchableOpacity>
       </View>

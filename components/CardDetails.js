@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { connect } from 'react-redux';
-
+import { API } from '../utils/API';
 const CardDetailsStyles = StyleSheet.create({
   container:{
     justifyContent: 'center',
@@ -39,18 +39,33 @@ const CardDetailsStyles = StyleSheet.create({
 });
 
 class CardDetails extends React.Component {
+  componentDidMount(){
+  }
+
+  playUI = () => (
+    <View style={CardDetailsStyles.container} >
+      <Text style={CardDetailsStyles.title}>{this.props.data.name}</Text>
+      <Text style={CardDetailsStyles.questions}>{this.props.data.questions.length} Questions</Text>
+      <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Add',{id:this.props.data.id})}} style={CardDetailsStyles.addButton}>
+        <Text>Add Another Question!</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={CardDetailsStyles.playButton} onPress={()=>{this.props.navigation.navigate('Game',{id: this.props.data.id})}} >
+        <Text style={CardDetailsStyles.playButtonText}>Play!</Text>
+      </TouchableOpacity>
+    </View>
+  )
+
+  noQuestionsUI = () => (
+    <View style={CardDetailsStyles.container}>
+      <Text>{`The deck "${this.props.data.name}" is empty!`}</Text>
+      <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Add',{id:this.props.data.id})}} style={CardDetailsStyles.addButton}>
+        <Text>Tap Here to add questions</Text>
+      </TouchableOpacity>
+    </View>
+  )
   render() {
     return (
-      <View style={CardDetailsStyles.container}>
-        <Text style={CardDetailsStyles.title}>{this.props.data.name}</Text>
-        <Text style={CardDetailsStyles.questions}>{this.props.data.questions.length} Questions</Text>
-        <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Add',{id:this.props.data.id})}} style={CardDetailsStyles.addButton}>
-          <Text>Add Another Question!</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={CardDetailsStyles.playButton} onPress={()=>{this.props.navigation.navigate('Game',{id: this.props.data.id})}} >
-          <Text style={CardDetailsStyles.playButtonText}>Play!</Text>
-        </TouchableOpacity>
-      </View>
+        this.props.data.questions.length === 0 ? this.noQuestionsUI() : this.playUI()
         )
         }
         }

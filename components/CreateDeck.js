@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, KeyboardAvoidingView, TextInput, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { AppActions } from '../actions/Actions'
+import { API } from '../utils/API'
 class CreateDeck extends React.Component {
   state = {
     name: '',
@@ -20,9 +21,11 @@ class CreateDeck extends React.Component {
   submitDeck = () => {
     const id = `DECK${new Date().getTime()}`;
     const { name } = this.state;
+    API.addDeck(id,name,this.props.entries.allIds)
     this.props.dispatch(AppActions.addDeck({id,name}));
+    this.setState({name: '',disableSubmit:true});
+    this.props.navigation.navigate('Landing')
   }
-
   render() {
     return (
       <View>
@@ -34,9 +37,11 @@ class CreateDeck extends React.Component {
             placeholder = "New Deck"
             placeholderTextColor = "#212121"
             autoCapitalize = "none"
+            value = {this.state.name}
             onChangeText = {this.handleChange}/>
+
         </KeyboardAvoidingView>
-        <TouchableOpacity onPress = {()=>{this.submitDeck()}}>
+        <TouchableOpacity disabled={this.state.disableSubmit} onPress = {()=>{this.submitDeck()}}>
           <Text> Create my Deck!</Text>
         </TouchableOpacity>
       </View>
@@ -45,7 +50,7 @@ class CreateDeck extends React.Component {
 }
 
 const mapStateToProps = (state,own) => {
-  return {}
+  return state;
 }
 
 export default connect(mapStateToProps)(CreateDeck);

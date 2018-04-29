@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
 import { connect } from 'react-redux';
+import { API } from '../utils/API';
+import { AppActions } from '../actions/Actions'
 import Card from './Card';
 
 const CardListStyles = StyleSheet.create({
@@ -12,7 +14,13 @@ const CardListStyles = StyleSheet.create({
 });
 
 class CardList extends React.Component {
+  componentDidMount(){
+    API.getData().then((res) => {
+      this.props.dispatch(AppActions.init(res))
+    })
+  }
   render() {
+    console.log(this.props.allCards)
     return (
       <ScrollView style={CardListStyles.container}>
         {

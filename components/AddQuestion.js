@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, View, Text, TouchableOpacity, StyleSheet, TextInput, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
 import { AppActions } from '../actions/Actions';
+import { API } from '../utils/API';
 
 const AddQuestionStyleSheet = StyleSheet.create({
   container:{
@@ -59,13 +60,15 @@ class AddQuestion extends React.Component {
       const parentId = this.props.id;
       const questionId = `QUESTION${new Date().getTime()}`;
       const { question } = this.state;
-      this.props.dispatch(AppActions.addQuestion({
-        parentId,
-        questionId,
-        question,
-        answer,
-      }))
-      setTimeout(this.props.navigation.goBack,1000)
+      API.addQuestion(parentId,questionId,this.state.question,answer,this.props.allEntries[this.props.id].questions).then((res)=>{
+        this.props.dispatch(AppActions.addQuestion({
+          parentId,
+          questionId,
+          question,
+          answer,
+        }))
+      })
+      this.props.navigation.goBack()
   }
   render() {
     return (<ScrollView contentContainerStyle={AddQuestionStyleSheet.container}>

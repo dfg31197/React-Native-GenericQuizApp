@@ -1,15 +1,17 @@
 import React from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { connect } from 'react-redux'
 import CardList from './components/CardList';
 import Card from './components/Card';
 import Game from './components/Game';
 import CreateDeck from './components/CreateDeck';
 import CardDetails from './components/CardDetails';
+import { AppActions } from './actions/Actions';
 import AddQuestion from './components/AddQuestion';
 import { Provider } from 'react-redux';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import store from './store/Store';
-
+import { API } from './utils/API';
 
 const HomeStack = StackNavigator({
   Landing: {
@@ -60,7 +62,8 @@ const TabNav = TabNavigator({
   }
 });
 
-export default class App extends React.Component {
+ export default class App extends React.Component {
+
   render() {
     return (
       <Provider store={store}>
