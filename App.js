@@ -12,6 +12,7 @@ import { Provider } from 'react-redux';
 import { TabNavigator, StackNavigator } from 'react-navigation';
 import store from './store/Store';
 import { API } from './utils/API';
+import { setLocalNotification } from './utils/Notifications'
 
 const HomeStack = StackNavigator({
   Landing: {
@@ -63,7 +64,9 @@ const TabNav = TabNavigator({
 });
 
  export default class App extends React.Component {
-
+   componentDidMount() {
+     setLocalNotification()
+   }
   render() {
     return (
       <Provider store={store}>

@@ -44,5 +44,7 @@ export const API = {
       },
       allIds: [id, ...oldArr],
     }))
-  }
+  },
+
+  getNotification: () => AsyncStorage.getItem(ASYNC_KEYS.NOTIFICATION_KEY)
 }
